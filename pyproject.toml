@@ -1,0 +1,51 @@
+[build-system]
+build-backend = 'mesonpy'
+requires = [
+    "meson-python",
+    "numpy>=1.19"
+]
+
+[project]
+name = "doki-Mowstyl"
+version = "1.6.1"
+description="Python interface for Doki (QSimov core)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE.md"}
+authors = [
+  {name = "Hernán Indíbil de la Cruz Calvo", email = "indikalesken@hotmail.com"},
+]
+dependencies = [
+    "numpy>=1.19"
+]
+
+[tool.cibuildwheel]
+repair-wheel-command = ""
+archs = "auto64"
+build = "cp311-manylinux_aarch64"
+#test-requires = "scipy"
+#test-command = [
+#  "mpiexec --mca plm_base_verbose 10 --mca orte_base_verbose 10 --mca opal_base_verbose 10 --allow-run-as-root -n 1 python {package}/tests/mpi_test.py",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/reg_creation_tests.py -n 1 -m 5",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/one_gate_tests.py -n 1 -m 5 -t 1",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/one_gate_tests.py -n 1 -m 5 -t 8",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/measure_tests.py -n 1 -m 5 -i 1000 -t 1",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/measure_tests.py -n 1 -m 5 -i 1000 -t 8",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/multiple_gate_tests.py -n 2 -m 5 -t 1",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/multiple_gate_tests.py -n 2 -m 5 -t 8",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/join_regs_tests.py -n 5 -t 1",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/join_regs_tests.py -n 5 -t 8",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/canonical_form_tests.py -n 1 -m 5",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/probability_tests.py -n 1 -m 5 -t 1",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/probability_tests.py -n 1 -m 5 -t 8",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/density_matrix_tests.py -n 1 -m 5",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/timed_test.py -n 5 -m 20 -t 1",
+#  "mpiexec --allow-run-as-root -n 1 python {package}/tests/timed_test.py -n 5 -m 20 -t 8",
+#]
+
+[tool.cibuildwheel.linux]
+before-test = "yum install -y openblas"
+
+[[tool.cibuildwheel.overrides]]
+select = "*musllinux*"
+before-test = "apk add openblas-dev"
